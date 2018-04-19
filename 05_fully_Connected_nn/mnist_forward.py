@@ -1,18 +1,22 @@
 import tensorflow as tf 
-INPUT_NODE = 784
-OUTPUT_NODE = 10
-LAYER1_NODE = 500
 
+INPUT_NODE = 784 # 28x28 = 784.
+OUTPUT_NODE = 10 # 0~9 => 10 numbers.
+LAYER1_NODE = 500 # Hidden layer has 500 nodes.
+
+# get the weight tensor
 def get_weight(shape, regularizer):
 	w = tf.Variable(tf.truncated_normal(shape,stddev=0.1))
 	if regularizer != None:
 		tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(regularizer)(w))
 	return w
 
+# get the bias tensor
 def get_bias(shape):
 	b = tf.Variable(tf.zeros(shape))
 	return b 
 
+# build the neural network
 def forward(x, regularizer):
 	w1 = get_weight([INPUT_NODE,LAYER1_NODE], regularizer)
 	b1 = get_bias([LAYER1_NODE])

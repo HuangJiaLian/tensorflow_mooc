@@ -1,4 +1,5 @@
 # coding: utf8
+
 import time
 import tensorflow as tf 
 from tensorflow.examples.tutorials.mnist import input_data
@@ -8,6 +9,7 @@ TEST_INTERVAL_SECS = 3
 
 def test(mnist):
 	with tf.Graph().as_default() as g:
+		# Rebuld the same nural network as in mnist_backward
 		x = tf.placeholder(tf.float32, [None, mnist_forward.INPUT_NODE])
 		y_ = tf.placeholder(tf.float32,[None, mnist_forward.OUTPUT_NODE])
 		y = mnist_forward.forward(x, None)
@@ -16,6 +18,7 @@ def test(mnist):
 		ema_restore = ema.variables_to_restore()
 		saver = tf.train.Saver(ema_restore)
 
+		# Compare y and y_, get accuracy.
 		correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_, 1))
 		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
@@ -27,6 +30,8 @@ def test(mnist):
 					global_step = ckpt.model_checkpoint_path.split('/')[-1].split('-')[-1]
 					accuracy_score = sess.run(accuracy, feed_dict = {x: mnist.test.images,y_: mnist.test.labels})
 					print("After %s training step(s), test accuracy = %g" % (global_step, accuracy_score))
+					# print(sess.run(correct_prediction, feed_dict = {x: mnist.test.images, y_: mnist.test.labels}))
+					# print(len(sess.run(correct_prediction, feed_dict = {x: mnist.test.images, y_: mnist.test.labels})))
 				else:
 					print('No checkpoint file found')
 					return
