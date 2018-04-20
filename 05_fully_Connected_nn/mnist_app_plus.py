@@ -49,12 +49,17 @@ def pre_pic(picName):
 
 	for i in range(28):
 		for j in range(28):
+			# Reverse pixel values
+			# because in MNIST 0 stands for white, 1 stands for black. 
 			im_arr[i][j] = 255 - im_arr[i][j]
-			if (im_arr[i][j] < threshold):
-				im_arr[i][j] = 0
-			else:
-				im_arr[i][j] = 255
 
+			# There is no need to do binarization ??
+			# if (im_arr[i][j] < threshold):
+			# 	im_arr[i][j] = 0
+			# else:
+			# 	im_arr[i][j] = 255
+
+	cv2.imshow("Little Gray",im_arr)
 	nm_arr = im_arr.reshape([1,784])
 	nm_arr = nm_arr.astype(np.float32)
 	img_ready = np.multiply(nm_arr, 1.0/255.0)
@@ -89,8 +94,13 @@ def application():
 	cv2.namedWindow('Press \'s\' to Save,\'c\' to clear')
 	# assign callback
 	cv2.setMouseCallback('Press \'s\' to Save,\'c\' to clear', mouse_event)
-
-	print("Press q or Esc to quit the program:")
+	print("\n=================================================")
+	print("How to use this program:\n")
+	print("Push and hold the left button of your \nmouse to draw number from 0 to 9\n")
+	print("Then press \'s\' to save the picture.")
+	print("Press \'c\' to clear for another draw")
+	print("Press \'q\' or Esc to quit the program:")
+	print("=================================================\n")
 	while True:
 		cv2.imshow('Press \'s\' to Save,\'c\' to clear', img)
 		key = cv2.waitKey(20)
