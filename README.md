@@ -100,3 +100,21 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 可是白用什么表示？黑用什么表示？ **值为0.0表示白色，值为1.0表示黑色，值之间表示逐渐变暗的灰色阴影。**
 
 ==我认为就不应该二值化，因为MNIST数据集是没有二值化的数据==
+
+
+
+全连接网络的弱点：
+
+待优化的参数多，参数越多就越容易产生过拟合。
+
+<img src="./pic/fc_p_nu.png" width="50%">
+
+所以要先提取图片特征，再将特征喂入全连接网络。
+
+卷积核上的参数就是`weight` 
+
+`dropout`还有一个功能是加快训练速度
+
+几种常用的CNN模型：
+
+`Lenet-5` `AlexNet` `VggNet` `GoogleNet` `ResNet` 
